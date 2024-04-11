@@ -36,11 +36,11 @@ def main():
         #     batch_rename(folder_path, new_name, False, 0)
         increment_value = int(input("Enter the increment value: "))
         batch_rename(folder_path, new_name, True, increment_value)
-        confirm = input("是否执行重命名操作？（Y/N）：")
+        confirm = input("Do you want to perform a rename operation?（Y/N）：")
         if confirm.upper() == "Y":
-            print("正在执行重命名操作...")
+            print("Performing rename operation...")
         else:
-            print("已取消重命名操作。")
+            print("Renaming operation canceled")
     else:
         print("Invalid option.")
 
