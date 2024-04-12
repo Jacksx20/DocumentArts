@@ -9,7 +9,6 @@ def insert_type_number(folder_path, start_value, increment, digits):
     for index, file_name in enumerate(file_list):
         new_name = f"{start_value + index * increment:0{digits}}_{file_name}"
         os.rename(os.path.join(folder_path, file_name), os.path.join(folder_path, new_name))
-    print("程序执行完毕！")
 
 def batch_rename(folder_path, new_name, increment):
     file_list = os.listdir(folder_path)
@@ -17,7 +16,6 @@ def batch_rename(folder_path, new_name, increment):
         file_extension = os.path.splitext(file_name)[1]
         new_file_name = f"{new_name}_{index * increment}{file_extension}"
         os.rename(os.path.join(folder_path, file_name), os.path.join(folder_path, new_file_name))
-    print("程序执行完毕！")
 
 def main():
     folder_path = input("请输入文件夹路径：")
@@ -44,3 +42,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    print("程序执行完毕！")
