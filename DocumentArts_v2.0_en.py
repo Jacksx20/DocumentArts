@@ -1,50 +1,55 @@
-#设计一个文件批量重命名工具程序，其功能是：用户输入文件夹路径，程序遍历文件夹下所有文件；用户选择插入类型编号还是批量重命名，若选择插入类型编号然后进行编号设置（起始值、依次增量值和位数）；若选择批量重命名后用户输入要改的名字以及是否需要添加增量值，若要添加就设置增量值；最后用户选择是否执行重命名操作，显示实时进度及任务卧槽情况
 import os
 
-def insert_type_number(file_path, start_value, increment, digits):
-    files = os.listdir(file_path)
-    for i, file_name in enumerate(files):
-        new_name = f"{start_value + i * increment:0{digits}}_{file_name}"
-        os.rename(os.path.join(file_path, file_name), os.path.join(file_path, new_name))
+#设计一个文件批量重命名工具程序，其功能是：用户输入文件夹路径，程序遍历文件夹下所有文件；
+#用户选择插入类型编号还是插入文本，若选择插入类型编号然后进行编号设置（起始值、依次增量值和位数）；
+#若选择插入文本后用户输入要插入的名字，最后用户选择是否执行重命名操作
 
-def batch_rename(file_path, new_name, add_increment, increment_value):
-    files = os.listdir(file_path)
-    for i, file_name in enumerate(files):
-        if add_increment:
-            new_name_with_increment = f"{new_name}_{i * increment_value}{os.path.splitext(file_name)[1]}"
-            os.rename(os.path.join(file_path, file_name), os.path.join(file_path, new_name_with_increment))
-        else:
-            new_file_name = f"{new_name}{os.path.splitext(file_name)[1]}"
-            os.rename(os.path.join(file_path, file_name), os.path.join(file_path, new_file_name))
+def batch_rename_files(folder_path):
+    # Get all files in the folder
+    files = os.listdir(folder_path)
 
-def main():
-    folder_path = input("Enter the folder path: ")
-    option = input("Choose an option:\n1-Insert type number\n2-Batch rename\nChoose an option:")
-    
-    if option == "1":
-        start_value = int(input("Enter the start value: "))
-        increment = int(input("Enter the increment value: "))
-        digits = int(input("Enter the number of digits: "))
-        insert_type_number(folder_path, start_value, increment, digits)
-    elif option == "2":
-        new_name = input("Enter the new name: ")
-        # add_increment = input("Do you want to add an increment value? (y/n): ")
-        # if add_increment.lower() == "y":
-            # increment_value = int(input("Enter the increment value: "))
-            # batch_rename(folder_path, new_name, True, increment_value)
-        # else:
-        #     batch_rename(folder_path, new_name, False, 0)
-        increment_value = int(input("Enter the increment value: "))
-        batch_rename(folder_path, new_name, True, increment_value)
-        confirm = input("Do you want to perform a rename operation?（Y/N）：")
-        if confirm.upper() == "Y":
-            print("Performing rename operation...")
-        else:
-            print("Renaming operation canceled")
+    # User selects insert type (number or text)
+    insert_type = input("Select insert type (1 for number, 2 for text): ")
+
+    if insert_type == "1":
+        # User selects number settings
+        start_value = int(input("Enter start value: "))
+        increment = int(input("Enter increment value: "))
+        digits = int(input("Enter number of digits: "))
+
+        # Rename files with number insertion
+        for i, file_name in enumerate(files):
+            file_extension = os.path.splitext(file_name)[1]
+            new_file_name = f"{start_value + i * increment:0{digits}}{file_extension}"
+            os.rename(os.path.join(folder_path, file_name), os.path.join(folder_path, new_file_name))
+
+    elif insert_type == "2":
+        # User enters text to insert
+        insert_text = input("Enter text to insert: ")
+
+        # Rename files with text insertion
+        for file_name in files:
+            file_extension = os.path.splitext(file_name)[1]
+            new_file_name = f"{insert_text}{file_name}"
+            os.rename(os.path.join(folder_path, file_name), os.path.join(folder_path, new_file_name))
+
     else:
-        print("Invalid option.")
+        print("Invalid insert type selected.")
 
-if __name__ == "__main__":
-    main()
-    print("Program executed successfully!")
+    # User selects whether to execute renaming operation
+    execute_rename = input("Do you want to execute the renaming operation? (y/n): ")
 
+    if execute_rename.lower() == "y":
+        print("Renaming files...")
+        # Perform renaming operation
+        # ...
+
+        print("Files renamed successfully.")
+    else:
+        print("Renaming operation cancelled.")
+
+# User inputs folder path
+folder_path = input("Enter folder path: ")
+
+# Call the batch_rename_files function
+batch_rename_files(folder_path)
