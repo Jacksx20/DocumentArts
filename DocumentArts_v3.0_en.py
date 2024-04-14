@@ -47,10 +47,11 @@ def main():
     folder_path = input("Enter the folder path: ")
 
     while True:
-        print("\n1. Insert Type Number")
-        print("2. Insert Text")
-        print("3. Check Files")
-        print("4. Exit")
+        print("\n1-Insert Type Number")
+        print("2-Insert Text")
+        print("3-Check Files")
+        print("4-Rename Files")
+        print("5-Exit")
 
         choice = input("Enter your choice: ")
 
@@ -61,6 +62,8 @@ def main():
         elif choice == "3":
             check_files(folder_path)
         elif choice == "4":
+            batch_rename(folder_path)
+        elif choice == "5":
             break
         else:
             print("Invalid choice. Please try again.")
